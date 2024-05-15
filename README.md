@@ -1,23 +1,31 @@
-# Femap Automation Repository
+# Pontis Composites Custom Tool for Femap
 
-This repository contains a collection of scripts and utilities for use with Femap, a powerful finite element modeling software. 
-These scripts are designed to enhance your Femap workflow, automate repetitive tasks, and extend the capabilities of the software.
-Some of those will be generic, however most of them will be focused around pre/post processing FEM models representing structures build using composite materials.
+This repository contains a collection of scripts that form a Custom Tool you can easily add directly into Femap. This is done using Femap API and is geared around creating FE models for composite materials.
 
-## Contents
-- This section will be gradually updated once scripts will be ready to be published. 
-## Getting Started
+These scripts are designed to enhance your Femap workflow, automate repetitive tasks, and extend the capabilities of the software. Some are generic, however most are focused around pre/post processing FEM models representing structures build using composite materials.
 
-### Prerequisites
-To ensure a smooth process, verify that you meet the following prerequisites:
+We only encourage you to create a GitHub account (free to do) so you can leave feedback and contribute.
 
+# Background
+At Pontis we often use Femap in our design process. Femap is just one of several Finite Element packages you can use for structural analysis. In general, it is just more complex to create models and optimise designs in composite. To help here more specific and advanced software tools can be used to achieve more efficient and effective workflows. These composite tools can be either commercially available, developed in-house, or a combination of both.  In this regard, over time at Pontis we have developed our own tools that compliment existing Femap capability.
+ 
+We often get asked about these tools and so in the spirt of enabling people to work more easily in Femap with composites we want to share a free to use custom tool add-on for Femap. Initially they are just a few functions (e.g. importing/exporting layups) but we believe still very useful to speed up your workflow and introduces you to the possibilities. If there is enough interest, we plan to continue to add more functions and upgrades 😉.
+
+# Contents
+- Create/Extract Materials.
+- Create/Extract Properties [e.g. laminates].
+- Create/Extract Layups [i.e. ply tables]
+
+# Getting Started
+
+## Prerequisites
 - Femap installed on your system.
 - Fundamental understanding of Femap's user interface and scripting capabilities.
 
-### Installation
+## Installation
 There are two possible options to enable custom scripts in your Femap. Below both are explained, choose one.
 
-#### Default Femap Location
+### 1. Default Femap Location
 
 - Clone or download this repository to your local machine.
 - Go to directory where Femap is installed and find **api** folder. 
@@ -25,7 +33,7 @@ There are two possible options to enable custom scripts in your Femap. Below bot
 - Paste the contents of this repository to this folder. 
 - Restarting the Femap might be necessary.
 
-#### Set custom scripts location
+### 2. Set custom scripts location
 
 *This is preferred option if you cannot paste files into your `Program Files`*
 
@@ -39,12 +47,12 @@ There are two possible options to enable custom scripts in your Femap. Below bot
 - Select the folder where you store your scripts and confirm the operation.
 - Scripts should be available under `User Tools` menu.
 
-### Usage
+## Usage
 - Open Femap.
 - Depending on the installation method go either to `Custom Tools` or `User Tools`.
 - Adhere to any instructions on the screen when prompted.
 
-### License
+## License
 Code in this repository is shared free of charge, licensed under the Apache 2.0 License.
 For bespoke inquires please contact us via <br>
 info\@pontis-engineering.com
