@@ -11,12 +11,19 @@ At Pontis we often use Femap in our design process. Femap is just one of several
  
 We often get asked about these tools and so in the spirt of enabling people to work more easily in Femap with composites we want to share a free to use custom tool add-on for Femap. Initially they are just a few functions (e.g. importing/exporting layups) but we believe still very useful to speed up your workflow and introduces you to the possibilities. If there is enough interest, we plan to continue to add more functions and upgrades 😉.
 
-# Contents
+# Current Functions 
 - Create/Extract Materials.
 - Create/Extract Properties [e.g. laminates].
 - Create/Extract Layups [i.e. ply tables]
+# Instructions!
+- The extact_to_file functions will open and excel file and worksheet (e.g. materials).
+- The create_from_file require to select an excel file with relevent worksheet (e.g. materials).
+- Hint: The format of this worksheet can be determined by first using the extact_to_file function.
+- Note: Density unit is assumed to be in kg/m^3 but converted to kg/mm^3 (i.e. assuming your model is mm).
+- Tip: The column heading name should not change, but the order you can change, for example you could add a column E33 if you also want to extract that value.
+- Hint: We intend to keep improving the functionality and resilient, so please raise any issues you find.
 
-# Getting Started
+# Getting Started [Installing the Custom Tool]
 
 ## Prerequisites
 - Femap installed on your system.
