@@ -61,5 +61,4 @@ There are two possible options to enable custom scripts in your Femap. Below bot
 
 ## License
 Code in this repository is shared free of charge, licensed under the Apache 2.0 License.
-For bespoke inquires please contact us via <br>
-info\@pontis-engineering.com
+For bespoke inquires please contact us via cae@pontis-engineering.com
