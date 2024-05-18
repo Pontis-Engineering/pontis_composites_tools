@@ -92,9 +92,9 @@ Sub femap_oLayup_read_(a2_data As Variant)
 	k = k + 1
 	a_layup(0, k) = "ply#"
 	k = k + 1
-	a_layup(0, k) = "matl id"
+	a_layup(0, k) = "mtrl id"
 	k = k + 1
-	a_layup(0, k) = "matl name"
+	a_layup(0, k) = "mtrl name"
 	k = k + 1
 	a_layup(0, k) = "ply t"
 	k = k + 1
