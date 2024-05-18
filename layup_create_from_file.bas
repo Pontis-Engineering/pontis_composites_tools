@@ -77,7 +77,7 @@ Sub femap_oLayup_create_(a2_data As Variant)
 		For j = 1 To UBound(a_temp) - 1
 			nMatlID(j - 1) = a_temp(j + 1, a2_look_("mtrl id", a_temp, -1))
 			dThickness(j - 1) = a_temp(j + 1, a2_look_("ply t", a_temp, -1))
-			dAngle(j - 1) = a_temp(j + 1, a2_look_("ply deg", a_temp, -1))
+			dAngle(j - 1) = a_temp(j + 1, a2_look_("deg", a_temp, -1))
 			nGlobalPly(j - 1) = a_temp(j + 1, a2_look_("gply#", a_temp, -1))
 		Next
 
