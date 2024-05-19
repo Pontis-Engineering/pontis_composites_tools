@@ -1,8 +1,10 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
-' new Excel spreadsheet.
+' Module: Layup Create from File
+
+' Description: Module importing created Layup objects from Excel spreadsheet to
+
+' Femap model.
 '
 ' Authors:
 '   - Darren Ellam <del@pontis-engineering.com>
@@ -29,7 +31,7 @@ Dim FemapApp As femap.model
 Dim oLayup As Object
 
 Dim ExcelFileName As String
-Dim ExcelApp As Object		' Excel.Application
+Dim ExcelApp As Object			' Excel.Application
 Dim ExcelWorkbook As Object 	' Excel.Workbook
 Dim ExcelWorksheet As Object	' Excel.Worksheet
 Dim ExcelDataArray As Variant
@@ -140,6 +142,7 @@ Sub HandleReturnCode(rc)
 End Sub
 
 
+
 Sub a2_tidy_(a2_data As Variant, i_num As Integer, s_misc As String)
 
 	Dim a_temp As Variant
@@ -208,6 +211,7 @@ Function a2_look_(s_keyword As Variant, a2_data As Variant, num As Long) '24p1
 			a2_look_ = j
 
 			If num <> 0 And num <> -1 Then a2_look_ = a2_data(num, j)
+
 			If num = 0 And IsEmpty(a2_look_) = False Then a2_look_ = "col" & a2_look_
 			If num = -1 And IsEmpty(a2_look_) = False Then a2_look_ = a2_look_
 			If IsEmpty(a2_look_) = False Then Exit Function

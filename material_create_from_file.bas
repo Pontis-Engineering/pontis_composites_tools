@@ -1,8 +1,10 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
-' new Excel spreadsheet.
+' Module: Material Create from File
+
+
+' Description: Module importing created Material objects from Excel spreadsheet to
+' Femap model.
 '
 ' Authors:
 '   - Darren Ellam <del@pontis-engineering.com>
@@ -45,6 +47,7 @@ Sub Main()
 
 	Dim a2_data As Variant
 
+
 	Call GetData(a2_data,"material")
 	Call femap_oMatl_create_(a2_data)
 
@@ -63,7 +66,6 @@ sub femap_oMatl_create_(a2_data as Variant)
 	Call a2_tidy_(a2_data, a2_look_("use", a2_data, -1), "")
 
 '--- find col num
-
 	Dim n_id As Long, n_title As Long, n_type As Long, n_den As Long, n_use As Long, _
 	n_E11 As Long, n_E22 As Long, n_E33 As Long, _
 	n_G12 As Long, n_G23 As Long, n_G31 As Long, _
@@ -73,7 +75,8 @@ sub femap_oMatl_create_(a2_data as Variant)
 	n_id = a2_look_("mtrl id", a2_data, -1)
 	n_title = a2_look_("mtrl name", a2_data, -1)
 	n_type = a2_look_("type id", a2_data, -1)
-	n_den = a2_look_("density", a2_data, -1)
+
+	n_den = a2_look_("den", a2_data, -1)
 	n_use = a2_look_("use", a2_data, -1)
 
 	n_E11 = a2_look_("E11", a2_data, -1)
@@ -125,6 +128,7 @@ sub femap_oMatl_create_(a2_data as Variant)
 
 		oMatl.Put (j)
 	Next
+
 
 '------ end main script
 
@@ -192,6 +196,7 @@ Function a2_look_(s_keyword As Variant, a2_data As Variant, num As Long) '24p1
 
 '--- checks
 
+
 	If num > UBound(a2_data) - LBound(a2_data) + 1 Then
 		Debug.Print "Provided index exceeds maximum array size"
 		Exit Function
@@ -200,6 +205,7 @@ Function a2_look_(s_keyword As Variant, a2_data As Variant, num As Long) '24p1
 	On Error Resume Next
 
 	i = UBound(a2_data, 2)
+
 
 	If Err.Number > 0 Then ' check if a 1D array
 		Debug.Print "Not a 2D array"

@@ -8,10 +8,10 @@ We only encourage you to create a GitHub account (free to do) so you can leave f
 
 # Background
 At Pontis we often use Femap in our design process. Femap is just one of several Finite Element packages you can use for structural analysis. In general, it is just more complex to create models and optimise designs in composite. To help here more specific and advanced software tools can be used to achieve more efficient and effective workflows. These composite tools can be either commercially available, developed in-house, or a combination of both.  In this regard, over time at Pontis we have developed our own tools that compliment existing Femap capability.
- 
+
 We often get asked about these tools and so in the spirt of enabling people to work more easily in Femap with composites we want to share a free to use custom tool add-on for Femap. Initially they are just a few functions (e.g. importing/exporting layups) but we believe still very useful to speed up your workflow and introduces you to the possibilities. If there is enough interest, we plan to continue to add more functions and upgrades 😉.
 
-# Current Functions 
+# Current Functions
 - Create/Extract Materials.
 - Create/Extract Properties [e.g. laminates].
 - Create/Extract Layups [i.e. ply tables]
@@ -35,9 +35,9 @@ There are two possible options to enable custom scripts in your Femap. Below bot
 ### 1. Default Femap Location
 
 - Clone or download this repository to your local machine.
-- Go to directory where Femap is installed and find **api** folder. 
+- Go to directory where Femap is installed and find **api** folder.
 - Default location of the folder: `C:/Program Files/Siemens/Femap [VERSION NO.]/api`
-- Paste the contents of this repository to this folder. 
+- Paste the contents of this repository to this folder.
 - Restarting the Femap might be necessary.
 
 ### 2. Set custom scripts location
@@ -50,7 +50,7 @@ There are two possible options to enable custom scripts in your Femap. Below bot
 
 ![User Tools.png](assets%2FUser%20Tools.png)
 
-- when you click Tools Directory, you will be prompted with the file explorer. 
+- when you click Tools Directory, you will be prompted with the file explorer.
 - Select the folder where you store your scripts and confirm the operation.
 - Scripts should be available under `User Tools` menu.
 

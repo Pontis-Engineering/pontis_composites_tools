@@ -1,7 +1,8 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
+' Module: Layup Extract to File
+
+' Description: Module exporting created Layup objects from Femap to
 ' new Excel spreadsheet.
 '
 ' Authors:
@@ -39,6 +40,7 @@ Sub Main
 '---set objects
 
 	Set femap = feFemap()
+
 	Set oMatl = femap.feMatl
 	Set oLayup = femap.feLayup
 
@@ -104,7 +106,6 @@ Sub femap_oLayup_read_(a2_data As Variant)
 
 	a_out(0) = a_layup
 
-
 	Dim vpval As Variant
 	Dim n_id As Long, s_title As String, n_plys As Integer
 	Dim vmatlID As Variant, vglobalply As Variant, vthickness  As Variant, vangle As Variant
@@ -149,91 +150,92 @@ Sub femap_oLayup_read_(a2_data As Variant)
 		a_out(i) = a_temp
 	Next
 
-	a2_data = a3_to_a2(a_out, "row")
+	a2_data = a3_to_a2_(a_out, "")
 
 '------ end main script
 End Sub
 
-Function a3_to_a2(a3 As Variant, sMeth As Variant)
+Function a3_to_a2_(a3 As Variant, sMeth As Variant)
 
-	Dim a_temp As Variant, a_2D As Variant, s_txt As String
-	Dim i As Long, j As Long, k As Long
+    Dim a_temp As Variant
+    Dim i As Long, j As Long, k As Long, count As Long
 
-	If Left(sMeth, 3) = "col" Or Left(sMeth, 3) = "COL" Then s_txt = "col" 'stack data to the right
-	If Left(sMeth, 3) = "row" Or Left(sMeth, 3) = "ROW" Then s_txt = "row" 'stack data down
+    Dim n_a2_row_start As Long, n_a2_row_end As Long
+    Dim n_a2_col_start As Long, n_a2_col_end As Long
 
-	Dim rowS As Integer, rowF As Integer         'new 2D array size
-	Dim colS As Integer, colF As Integer         'new 2D array size
-	Dim n_row As Long, n_col As Long
-	Dim i0 As Integer, j0 As Long
-	Dim n_3D_start As Long, n_3D_finish As Long
-	n_3D_start = LBound(a3)
-	n_3D_finish = UBound(a3)
+'--- # fill array assuming 2d arrays
 
-'check if first array is an array
-	a_temp = a3(LBound(a3))
-	If IsArray(a_temp) = False Then
-		Dim a_temp0(0) As Variant
-		a_temp0(0) = a3(0)
-		a3(0) = a_temp0
-	End If
+    On Error GoTo ErrHandler
 
-	Dim a_output As Variant
+    n_a2_row_start = 0
 
-	For k = n_3D_start To n_3D_finish
-		a_temp = a3(k)
+    For i = LBound(a3) To UBound(a3)
 
-		On Error Resume Next
-		i = UBound(a_temp, 2)
-		If Err.Number > 0 Then
-			ReDim array_2D(LBound(a_temp, 1) To UBound(a_temp, 1), 1 To 1) As Variant
+        a_temp = a3(i)
 
-			For i = LBound(a_temp, 1) To UBound(a_temp, 1)
-				array_2D(i, 1) = a_temp(i)
-			Next
+        n_a2_row_end = n_a2_row_end + UBound(a_temp) - LBound(a_temp) + 1
 
-			a_temp = array_2D
-		End If
-		On Error GoTo 0
+    Next
 
-		a3(k) = a_temp
+    a_temp = a3(n_a2_row_start)
 
-		i0 = UBound(a_temp) - LBound(a_temp) + 1
-		j0 = UBound(a_temp, 2) - LBound(a_temp, 2) + 1
+    ReDim a2(n_a2_row_start To n_a2_row_end, LBound(a_temp, 2) To UBound(a_temp, 2)) As Variant
 
-		n_row = i0 + n_row
-		n_col = j0 + n_col
-	Next
+    count = n_a2_row_start
 
-	If Mid(sMeth, 1, 3) = "col" Then n_row = i0
-	If Mid(sMeth, 1, 3) = "row" Then n_col = j0
-	ReDim a_output(1 To n_row, 1 To n_col) As Variant
+    For k = LBound(a3) To UBound(a3)
 
-	Dim count As Long
-	count = 0
+        a_temp = a3(k)
 
-	Dim i1 As Long, j1 As Long
+        j = LBound(a_temp, 2)
 
-	For k = n_3D_start To n_3D_finish
-		a_temp = a3(k)
-		i1 = 0
+        For i = LBound(a_temp) To UBound(a_temp)
 
-		For i = LBound(a_temp, 1) To UBound(a_temp, 1)
-			i1 = i1 + 1
-			j1 = 0
+            For j = LBound(a_temp, 2) To UBound(a_temp, 2)
 
-			For j = LBound(a_temp, 2) To UBound(a_temp, 2)
-				j1 = j1 + 1
+                a2(count, j) = a_temp(i, j)
 
-				If Mid(sMeth, 1, 3) = "col" Then a_output(i1, count + j1) = a_temp(i, j)
-				If Mid(sMeth, 1, 3) = "row" Then a_output(count + i1, j1) = a_temp(i, j)
-			Next
-		Next
+            Next
 
-		If Mid(sMeth, 1, 3) = "col" Then count = count + UBound(a_temp, 2) - LBound(a_temp, 2) + 1
-		If Mid(sMeth, 1, 3) = "row" Then count = count + UBound(a_temp, 1) - LBound(a_temp, 1) + 1
-	Next
+            count = count + 1
 
-	a3_to_a2 = a_output
+        Next
+
+    Next
+
+    a3_to_a2_ = a2
+
+    Exit Function
+
+
+ErrHandler:
+
+'--- # fill array assuming 1d arrays
+
+    a_temp = a3(LBound(a3, 1))
+
+    n_a2_row_start = LBound(a3)
+
+    n_a2_row_end = UBound(a3)
+
+    ReDim a2(n_a2_row_start To n_a2_row_end, LBound(a_temp, 1) To UBound(a_temp, 1)) As Variant
+
+    For i = LBound(a2) To UBound(a2)
+
+        a_temp = a3(i)
+
+        For j = LBound(a_temp) To UBound(a_temp)
+
+            a2(i, j) = a_temp(j)
+
+        Next
+
+        count = count + 1
+
+    Next
+
+    a3_to_a2_ = a2
+
 
 End Function
+

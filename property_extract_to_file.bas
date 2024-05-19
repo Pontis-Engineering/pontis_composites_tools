@@ -1,7 +1,8 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
+' Module: Property Extract to File
+
+' Description: Module exporting created Property objects from Femap to
 ' new Excel spreadsheet.
 '
 ' Authors:
@@ -54,8 +55,6 @@ Sub Main
 	Set ws = wb.ActiveSheet
 	ws.Name = "property"
 
-	a2_data = appExcel.WorksheetFunction.Transpose(a2_data)
-
 	Dim n_row As Long, n_col As Long
 	n_row =UBound(a2_data,1)-LBound(a2_data,1)+1
 	n_col = UBound(a2_data,2)-LBound(a2_data,2)+1
@@ -83,7 +82,7 @@ Sub femap_oProp_extract_(a2_data As Variant)
 
 	a_prop(1) = "prop id"
 	a_prop(2) = "prop name"
-	a_prop(3) = "matl id"
+	a_prop(3) = "mtrl id"
 	a_prop(4) = "color"
 	a_prop(5) = "layer"
 	a_prop(6) = "type"
@@ -106,8 +105,8 @@ Sub femap_oProp_extract_(a2_data As Variant)
 		a_prop(3) = oProp.matlID
 		a_prop(4) = oProp.Color
 		a_prop(5) = oProp.layer
-
 		a_prop(6) = oProp.Type
+
 
 		If a_prop(6) = 5 Then a_prop(7) = "beam (5)"
 		If a_prop(6) = 29 Then a_prop(7) = "rigid (29)"
@@ -122,95 +121,92 @@ Sub femap_oProp_extract_(a2_data As Variant)
 		a_out(i) = a_prop
 	Next
 
-	a2_data = a3_to_a2(a_out, "col1")
+	a2_data = a3_to_a2_(a_out, "")
 
 '------ end main script
 
 End Sub
 
-Function a3_to_a2(a3 As Variant, sMeth As Variant)
+Function a3_to_a2_(a3 As Variant, sMeth As Variant)
 
-	Dim a_temp As Variant, a_2D As Variant, s_txt As String
-	Dim i As Long, j As Long, k As Long
+  Dim a_temp As Variant
+  Dim i As Long, j As Long, k As Long, count As Long
 
-	If Left(sMeth, 3) = "col" Or Left(sMeth, 3) = "COL" Then s_txt = "col" 'stack data to the right
-	If Left(sMeth, 3) = "row" Or Left(sMeth, 3) = "ROW" Then s_txt = "row" 'stack data down
+  Dim n_a2_row_start As Long, n_a2_row_end As Long
+  Dim n_a2_col_start As Long, n_a2_col_end As Long
 
-	Dim rowS As Integer, rowF As Integer         'new 2D array size
-	Dim colS As Integer, colF As Integer         'new 2D array size
-	Dim n_row As Long, n_col As Long
-	Dim i0 As Integer, j0 As Long
-	Dim n_3D_start As Long, n_3D_finish As Long
-	n_3D_start = LBound(a3)
-	n_3D_finish = UBound(a3)
+'--- # fill array assuming 2d arrays
 
-'check if first array is an array
-	a_temp = a3(LBound(a3))
-	If IsArray(a_temp) = False Then
-		Dim a_temp0(0) As Variant
-		a_temp0(0) = a3(0)
-		a3(0) = a_temp0
-	End If
+    On Error GoTo ErrHandler
 
-	Dim a_output As Variant
+    n_a2_row_start = 0
 
-	For k = n_3D_start To n_3D_finish
-		a_temp = a3(k)
+    For i = LBound(a3) To UBound(a3)
 
-		On Error Resume Next
-		i = UBound(a_temp, 2)
-		If Err.Number > 0 Then
+        a_temp = a3(i)
 
-			ReDim array_2D(LBound(a_temp, 1) To UBound(a_temp, 1), 1 To 1) As Variant
+        n_a2_row_end = n_a2_row_end + UBound(a_temp) - LBound(a_temp) + 1
 
-			For i = LBound(a_temp, 1) To UBound(a_temp, 1)
-				array_2D(i, 1) = a_temp(i)
-			Next
+    Next
 
-			a_temp = array_2D
+    a_temp = a3(n_a2_row_start)
 
-		End If
-		On Error GoTo 0
+    ReDim a2(n_a2_row_start To n_a2_row_end, LBound(a_temp, 2) To UBound(a_temp, 2)) As Variant
 
-		a3(k) = a_temp
+    count = n_a2_row_start
 
-		i0 = UBound(a_temp) - LBound(a_temp) + 1
-		j0 = UBound(a_temp, 2) - LBound(a_temp, 2) + 1
+    For k = LBound(a3) To UBound(a3)
 
-		n_row = i0 + n_row
-		n_col = j0 + n_col
-	Next
+        a_temp = a3(k)
 
-	If Mid(sMeth, 1, 3) = "col" Then n_row = i0
-	If Mid(sMeth, 1, 3) = "row" Then n_col = j0
-	ReDim a_output(1 To n_row, 1 To n_col) As Variant
+        j = LBound(a_temp, 2)
 
-	Dim count As Long
-	count = 0
+        For i = LBound(a_temp) To UBound(a_temp)
 
-	Dim i1 As Long, j1 As Long
+            For j = LBound(a_temp, 2) To UBound(a_temp, 2)
 
-	For k = n_3D_start To n_3D_finish
-		a_temp = a3(k)
-		i1 = 0
+                a2(count, j) = a_temp(i, j)
 
-		For i = LBound(a_temp, 1) To UBound(a_temp, 1)
-			i1 = i1 + 1
-			j1 = 0
+            Next
 
-			For j = LBound(a_temp, 2) To UBound(a_temp, 2)
-				j1 = j1 + 1
+            count = count + 1
 
-				If Mid(sMeth, 1, 3) = "col" Then a_output(i1, count + j1) = a_temp(i, j)
-				If Mid(sMeth, 1, 3) = "row" Then a_output(count + i1, j1) = a_temp(i, j)
-			Next
-		Next
+        Next
 
-		If Mid(sMeth, 1, 3) = "col" Then count = count + UBound(a_temp, 2) - LBound(a_temp, 2) + 1
-		If Mid(sMeth, 1, 3) = "row" Then count = count + UBound(a_temp, 1) - LBound(a_temp, 1) + 1
-	Next
+    Next
 
-	a3_to_a2 = a_output
+    a3_to_a2_ = a2
+
+    Exit Function
+
+
+ErrHandler:
+
+'--- # fill array assuming 1d arrays
+
+    a_temp = a3(LBound(a3, 1))
+
+    n_a2_row_start = LBound(a3)
+
+    n_a2_row_end = UBound(a3)
+
+    ReDim a2(n_a2_row_start To n_a2_row_end, LBound(a_temp, 1) To UBound(a_temp, 1)) As Variant
+
+    For i = LBound(a2) To UBound(a2)
+
+        a_temp = a3(i)
+
+        For j = LBound(a_temp) To UBound(a_temp)
+
+            a2(i, j) = a_temp(j)
+
+        Next
+
+        count = count + 1
+
+    Next
+
+    a3_to_a2_ = a2
+
 
 End Function
-

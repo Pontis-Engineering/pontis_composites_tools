@@ -1,7 +1,8 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
+' Module: Material Extract to File
+
+' Description: Module exporting created Material objects from Femap to
 ' new Excel spreadsheet.
 '
 ' Authors:
@@ -35,7 +36,6 @@ Dim ws As Object
 Sub Main
 
 '---set objects
-
 	Set femap = feFemap()
 	Set oMatl = femap.feMatl
 
@@ -70,7 +70,6 @@ Sub femap_oMatl_extract_(a_matl As Variant)
 
 '------ set variables
 	Dim i As Long, j As Long, s_txt As String
-
 	Dim values As Variant, element As Variant
 
 	Dim appExcel As Object
@@ -134,7 +133,6 @@ Sub femap_oMatl_extract_(a_matl As Variant)
 			If s_txt = "s11c" Then a_matl(j, i + 1) = oMatl.CompressionLimit1
 			If s_txt = "s22c" Then a_matl(j, i + 1) = oMatl.CompressionLimit2
 			If s_txt = "s12" Then a_matl(j, i + 1) = oMatl.ShearLimit
-
 			If s_txt = "use" Then a_matl(j, i + 1) = 1
 
 		Next

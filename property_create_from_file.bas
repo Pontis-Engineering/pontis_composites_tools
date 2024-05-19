@@ -1,8 +1,10 @@
 '*********************************************************************************
 ' Project: Pontis Composite Tools
-' Module: Material Export
-' Description: Module exporting created material objects from Femap to
-' new Excel spreadsheet.
+' Module: Property Create from File
+
+' Description: Module importing created Property objects from Excel spreadsheet to
+
+' Femap model.
 '
 ' Authors:
 '   - Darren Ellam <del@pontis-engineering.com>
@@ -89,6 +91,8 @@ Sub femap_oProp_create_(a2_data As Variant)
 		rc = oProp.Put(n_id)
 
 	Next
+
+
 
 '------ end main script
 
