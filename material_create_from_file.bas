@@ -122,9 +122,9 @@ sub femap_oMatl_create_(a2_data as Variant)
 		If n_den > 0 Then oMatl.density = a2_data(i, n_den) * 0.000000001 'density assume input is kg/m^3
 		If n_s11t > 0 Then oMatl.TensionLimit1 = a2_data(i, n_s11t) 'TensionLimit1
 		If n_s22t > 0 Then oMatl.TensionLimit2 = a2_data(i, n_s22t) 'TensionLimit2
-		If n_s11c > 0 Then oMatl.CompressionLimit1 = a2_data(i, n_s11t) 'CompressionLimit1
-		If n_s22c > 0 Then oMatl.CompressionLimit2 = a2_data(i, n_s22t) 'CompressionLimit2
-		If n_s12 > 0 Then oMatl.ShearLimit = a2_data(i, n_s22t) 'ShearLimit
+		If n_s11c > 0 Then oMatl.CompressionLimit1 = a2_data(i, n_s11c) 'CompressionLimit1
+		If n_s22c > 0 Then oMatl.CompressionLimit2 = a2_data(i, n_s22c) 'CompressionLimit2
+		If n_s12 > 0 Then oMatl.ShearLimit = a2_data(i, n_s12) 'ShearLimit
 
 		oMatl.Put (j)
 	Next
