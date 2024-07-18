@@ -72,8 +72,8 @@ sub femap_oMatl_create_(a2_data as Variant)
 	n_nu12 As Long, n_nu23 As Long, n_nu13 As Long, _
 	n_s11t As Long, n_s22t As Long, n_s11c As Long, n_s22c As Long, n_s12 As Long
 
-	n_id = a2_look_("mtrl id", a2_data, -1)
-	n_title = a2_look_("mtrl name", a2_data, -1)
+	n_id = a2_look_("matl id", a2_data, -1)
+	n_title = a2_look_("matl name", a2_data, -1)
 	n_type = a2_look_("type id", a2_data, -1)
 
 	n_den = a2_look_("den", a2_data, -1)
